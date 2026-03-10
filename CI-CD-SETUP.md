@@ -67,7 +67,7 @@ curl http://localhost:8081/api/public/health
 
 ```
 ┌─────────────┐
-│   Jenkins   │ (Port 8080)
+│   Jenkins   │ (Port 9090)
 │  Container  │
 └──────┬──────┘
        │ Build & Deploy
