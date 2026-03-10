@@ -20,7 +20,7 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 ### 3. Accéder à Jenkins
-- URL: http://localhost:8080
+- URL: http://localhost:9090
 - Coller le mot de passe récupéré
 
 ### 4. Configuration Jenkins
