@@ -22,14 +22,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvn test'
+                sh 'mvn test'
             }
             post {
                 always {
@@ -41,17 +41,17 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                bat "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
-                bat "docker tag ${DOCKER_IMAGE}:${BUILD_NUMBER} ${DOCKER_IMAGE}:latest"
+                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                sh "docker tag ${DOCKER_IMAGE}:${BUILD_NUMBER} ${DOCKER_IMAGE}:latest"
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                bat """
-                    docker stop ${APP_NAME} || exit 0
-                    docker rm ${APP_NAME} || exit 0
+                sh """
+                    docker stop ${APP_NAME} || true
+                    docker rm ${APP_NAME} || true
                     docker run -d --name ${APP_NAME} -p 8081:8081 ${DOCKER_IMAGE}:latest
                 """
             }
