@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    container_name: jenkins
+    privileged: true
+    user: root
+    ports:
+      - "9090:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/workspace
+    networks:
+      - cicd-network
+    restart: unless-stopped
+
+  backend:
+    image: backend-app:latest
+    container_name: backend
+    ports:
+      - "8081:8081"
+    networks:
+      - cicd-network
+    restart: unless-stopped
+    depends_on:
+      - jenkins
+
+volumes:
+  jenkins_home:
+    driver: local
+
+networks:
+  cicd-network:
+    driver: bridge
