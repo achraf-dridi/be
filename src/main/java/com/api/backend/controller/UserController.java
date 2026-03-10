@@ -27,7 +27,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/public/health")
     public ResponseEntity<String> publicEndpoint() {
-        return ResponseEntity.ok("Public endpoint - no authentication required");
+        return ResponseEntity.ok("Public endpoint - This is achraf speaking...");
     }
 
     @GetMapping("/users")
